@@ -1,8 +1,10 @@
 const INITIAL_VALUE = 0;
 let displayValue = INITIAL_VALUE;
-let num1 = 100;
-let num2 = 3;
-let operator = "/";
+let num1;
+let num2;
+let operator;
+
+console.log(num1, num2, operator);
 
 const add = (num1, num2) => {
   // VER SI HACE FALTA DEJAR UNA VEZ IMPLEMENTADA LA GUI:
@@ -49,7 +51,6 @@ const operate = (operator, num1, num2) => {
 }
 
 const display = (e) => {
-  // RECIBE UN VALOR DE CADA BOTÓN, LO VA GUARDANDO EN EL DISPLAYVALUE Y LO DEVUELVE
   let input = e.target.dataset.value;
 
   if(Number(displayValue) === INITIAL_VALUE) {
@@ -67,6 +68,49 @@ const clearDisplay = () => {
   displayDiv.textContent = `${displayValue}`;
 }
 
+const setNum = (e) => {
+  let operation = e.target.dataset.value;
+  if(!num1) {
+    let value = displayValue;
+    num1 = Number(value);
+
+    console.log(num1);
+
+    displayValue = 0;
+    displayDiv.textContent = `${displayValue}`;
+  } else if(!num2) {
+    let value = displayValue;
+    num2 = Number(value);
+
+    console.log(num2);
+
+    displayValue = 0;
+    displayDiv.textContent = `${displayValue}`;
+  } else {
+    displayValue = 0;
+    displayDiv.textContent = `${displayValue}`;
+  }
+
+  operator = String(operation);
+  console.log(operator);
+}
+
+const getResult = () => {
+  if(!num2) {
+    let value = displayValue;
+    num2 = Number(value);
+  }
+
+  let result = operate(operator, num1, num2);
+
+  console.log(operator, num1, num2);
+
+  displayValue = result;
+  displayDiv.textContent = `${displayValue}`;
+
+  return result;
+}
+
 const displayDiv = document.querySelector(".display-container");
 displayDiv.textContent = `${displayValue}`;
 
@@ -75,11 +119,13 @@ digitBtn.forEach(btn => {
   btn.addEventListener("click", display);
 })
 
+const operatorBtn = document.querySelectorAll(".btn-operator");
+operatorBtn.forEach(btn => {
+  btn.addEventListener("click", setNum)
+})
+
+const equalsBtn = document.querySelector(".btn-equals");
+equalsBtn.addEventListener("click", getResult);
+
 const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clearDisplay);
-
-/*
-Create the functions that populate the display when you click the number buttons.
-
-You should be storing the ‘display value’ in a variable somewhere for use in the next step.
-*/
