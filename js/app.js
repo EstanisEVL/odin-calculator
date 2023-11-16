@@ -4,37 +4,22 @@ let num1;
 let num2;
 let operator;
 
-console.log(num1, num2, operator);
-
 const add = (num1, num2) => {
-  // VER SI HACE FALTA DEJAR UNA VEZ IMPLEMENTADA LA GUI:
-  if(typeof num1 !== "number" || typeof num2 !== "number") return "Please input valid numbers";
-
   return num1 + num2;
 };
-
 const substract = (num1, num2) => {
-  // VER SI HACE FALTA DEJAR UNA VEZ IMPLEMENTADA LA GUI:
-  if(typeof num1 !== "number" || typeof num2 !== "number") return "Please input valid numbers";
-
   return num1 - num2;
 }
-
 const multiply = (num1, num2) => {
-  // VER SI HACE FALTA DEJAR UNA VEZ IMPLEMENTADA LA GUI:
-  if(typeof num1 !== "number" || typeof num2 !== "number") return "Please input valid numbers";
-
   return num1 * num2;
 }
-
 const divide = (num1, num2) => {
-  // VER SI HACE FALTA DEJAR UNA VEZ IMPLEMENTADA LA GUI:
-  if(typeof num1 !== "number" || typeof num2 !== "number") return "Please input valid numbers";
-
   return num1 / num2;
 }
-
 const operate = (operator, num1, num2) => {
+  num1 = Number(num1);
+  num2 = Number(num2);
+
   switch (operator) {
     case "+":
       return add(num1, num2);
@@ -46,8 +31,19 @@ const operate = (operator, num1, num2) => {
       return multiply(num1, num2);
 
     case "/":
-      return divide(num1, num2);
+      if(num2 === 0) return null
+      else return divide(num1, num2);
   }
+}
+
+// Display:
+const clearDisplay = () => {
+  num1 = "";
+  num2 = "";
+
+  displayValue = INITIAL_VALUE;
+
+  displayDiv.textContent = `${displayValue}`;
 }
 
 const display = (e) => {
@@ -62,53 +58,64 @@ const display = (e) => {
   }
 }
 
-const clearDisplay = () => {
-  displayValue = INITIAL_VALUE;
-
-  displayDiv.textContent = `${displayValue}`;
-}
-
-const setNum = (e) => {
-  let operation = e.target.dataset.value;
-  if(!num1) {
-    let value = displayValue;
-    num1 = Number(value);
-
-    console.log(num1);
-
-    displayValue = 0;
-    displayDiv.textContent = `${displayValue}`;
-  } else if(!num2) {
-    let value = displayValue;
-    num2 = Number(value);
-
-    console.log(num2);
-
-    displayValue = 0;
-    displayDiv.textContent = `${displayValue}`;
+// Resolve operation:
+const resolveOperation = () => {
+  if(!operator || typeof num1 === undefined) {
+    return;
+  } else if(operator === "/" && num2 === 0) {
+    console.log(operator, num1, num2);
+    return;
   } else {
-    displayValue = 0;
-    displayDiv.textContent = `${displayValue}`;
-  }
+    num2 = Number(displayValue);
 
-  operator = String(operation);
-  console.log(operator);
+    let result = operate(operator, num1, num2);
+    
+    displayValue = result;
+    displayDiv.textContent = `${displayValue}`;
+
+    num1 = Number(result);
+    operator = null;
+
+    displayValue = INITIAL_VALUE;
+    console.log(operator, num1, num2);
+    return result;
+  }
 }
 
-const getResult = () => {
-  if(!num2) {
-    let value = displayValue;
-    num2 = Number(value);
+// Set operator:
+const setOperator = (e) => {
+  if(operator === null) {
+    let operation = e.target.dataset.value;
+
+    operator = String(operation);
+  } else {
+    let operation = e.target.dataset.value;
+  
+    if(!num1) {
+      num1 = Number(displayValue);
+
+      displayValue = INITIAL_VALUE;
+  
+      operator = String(operation);
+    } else {
+      num2 = displayValue;
+
+      // POR DEFECTO, SI VUELVO A APRETAR UN OPERADOR EL NUM2 VA A SER 0
+
+      console.log(operator, num1, num2);
+
+      if(String(operation) === String(operator)) {
+        console.log("YA HAY OPERADOR");
+        return;
+      };
+  
+      num1 = resolveOperation();
+  
+      displayValue = INITIAL_VALUE;
+  
+      operator = String(operation);
+    }
   }
-
-  let result = operate(operator, num1, num2);
-
-  console.log(operator, num1, num2);
-
-  displayValue = result;
-  displayDiv.textContent = `${displayValue}`;
-
-  return result;
 }
 
 const displayDiv = document.querySelector(".display-container");
@@ -121,11 +128,16 @@ digitBtn.forEach(btn => {
 
 const operatorBtn = document.querySelectorAll(".btn-operator");
 operatorBtn.forEach(btn => {
-  btn.addEventListener("click", setNum)
+  btn.addEventListener("click", setOperator);
 })
 
 const equalsBtn = document.querySelector(".btn-equals");
-equalsBtn.addEventListener("click", getResult);
+equalsBtn.addEventListener("click", resolveOperation);
 
 const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clearDisplay);
+
+/*
+Gotchas: watch out for and fix these bugs if they show up in your code:
+  - You should round answers with long decimals so that they don’t overflow the screen.
+*/
