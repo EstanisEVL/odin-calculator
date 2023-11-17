@@ -51,9 +51,16 @@
       class="btn-digit">3</button>
     </div>
 
-    <button 
-    data-value="0"
-    class="btn-digit">0</button>
+    <div>
+      <button class="btn-toggle">-/+</button>
+      <button 
+      data-value="0"
+      class="btn-digit">0</button>
+      <button 
+      data-value="."
+      class="btn-decimal">.</button>
+    </div>
+
   </div>
 
   <div class="operators">
@@ -76,7 +83,9 @@
   </div>
 
   <div class="clear-container">
-    <button class="clear">C</button>
+    <button class="btn-clear">C</button>
+
+    <button class="btn-delete"><</button>
   </div>
 
   <script src="./js/app.js"></script>

@@ -44,9 +44,25 @@ const clearDisplay = () => {
   displayValue = INITIAL_VALUE;
 
   displayDiv.textContent = `${displayValue}`;
+
+  decimalBtn.removeAttribute("disabled");
 }
 
-const display = (e) => {
+const removeValue = () => {
+  if(displayValue === 0) {
+    return;
+  }
+
+  displayValue = displayValue.slice(0, -1);
+
+  if(displayValue.length === 0) {
+    displayValue = 0;
+  }
+  
+  displayDiv.textContent = `${displayValue}`;
+}
+
+const showDisplay = (e) => {
   let input = e.target.dataset.value;
 
   if(Number(displayValue) === INITIAL_VALUE) {
@@ -56,6 +72,25 @@ const display = (e) => {
     displayValue += String(input);
     displayDiv.textContent = `${displayValue}`;
   }
+}
+
+const toggleValue = () => {
+  if(displayValue === 0) {
+    return;
+  }
+
+  displayValue = Number(displayValue) * -1;
+
+  displayDiv.textContent = `${displayValue}`;
+}
+
+const addDecimal = (e) => {
+  let input = e.target.dataset.value;
+
+  displayValue += input;
+  displayDiv.textContent = `${displayValue}`;
+
+  e.target.disabled = true;
 }
 
 // Resolve operation:
@@ -72,6 +107,10 @@ const resolveOperation = () => {
     if(result % 1 !== 0) {
       result = Number(result.toFixed(5));
     }
+
+    if (result === null) {
+      result = "Can't divide by 0. Press C to start over."
+    }
     
     displayValue = result;
     displayDiv.textContent = `${displayValue}`;
@@ -80,12 +119,14 @@ const resolveOperation = () => {
     operator = null;
 
     displayValue = INITIAL_VALUE;
+    decimalBtn.removeAttribute("disabled");
     return result;
   }
 }
 
 // Set operator:
 const setOperator = (e) => {
+  decimalBtn.removeAttribute("disabled");
   if(operator === null) {
     let operation = e.target.dataset.value;
 
@@ -115,16 +156,31 @@ displayDiv.textContent = `${displayValue}`;
 
 const digitBtn = document.querySelectorAll(".btn-digit");
 digitBtn.forEach(btn => {
-  btn.addEventListener("click", display);
-})
+  btn.addEventListener("click", showDisplay);
+});
+
+const toggleBtn = document.querySelector(".btn-toggle");
+toggleBtn.addEventListener("click", toggleValue);
+
+const decimalBtn = document.querySelector(".btn-decimal");
+decimalBtn.addEventListener("click", addDecimal);
 
 const operatorBtn = document.querySelectorAll(".btn-operator");
 operatorBtn.forEach(btn => {
   btn.addEventListener("click", setOperator);
-})
+});
 
 const equalsBtn = document.querySelector(".btn-equals");
 equalsBtn.addEventListener("click", resolveOperation);
 
-const clearBtn = document.querySelector(".clear");
+const clearBtn = document.querySelector(".btn-clear");
 clearBtn.addEventListener("click", clearDisplay);
+
+const deleteBtn = document.querySelector(".btn-delete");
+deleteBtn.addEventListener("click", removeValue);
+
+/*
+- Make it look nice! This is a great project to practice your CSS skills. At least make the operations a different color from the keypad buttons.
+
+- Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble. Read the MDN documentation for event.preventDefault to help solve this problem.
+*/
