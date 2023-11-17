@@ -67,7 +67,11 @@ const resolveOperation = () => {
   } else {
     num2 = Number(displayValue);
 
-    let result = operate(operator, num1, num2).toFixed(5);
+    let result = operate(operator, num1, num2);
+
+    if(result % 1 !== 0) {
+      result = Number(result.toFixed(5));
+    }
     
     displayValue = result;
     displayDiv.textContent = `${displayValue}`;
