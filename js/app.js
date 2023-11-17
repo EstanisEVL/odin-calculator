@@ -63,12 +63,11 @@ const resolveOperation = () => {
   if(!operator || typeof num1 === undefined) {
     return;
   } else if(operator === "/" && num2 === 0) {
-    console.log(operator, num1, num2);
     return;
   } else {
     num2 = Number(displayValue);
 
-    let result = operate(operator, num1, num2);
+    let result = operate(operator, num1, num2).toFixed(5);
     
     displayValue = result;
     displayDiv.textContent = `${displayValue}`;
@@ -77,7 +76,6 @@ const resolveOperation = () => {
     operator = null;
 
     displayValue = INITIAL_VALUE;
-    console.log(operator, num1, num2);
     return result;
   }
 }
@@ -92,27 +90,17 @@ const setOperator = (e) => {
     let operation = e.target.dataset.value;
   
     if(!num1) {
-      num1 = Number(displayValue);
+      num1 = displayValue;
 
       displayValue = INITIAL_VALUE;
   
       operator = String(operation);
     } else {
       num2 = displayValue;
-
-      // POR DEFECTO, SI VUELVO A APRETAR UN OPERADOR EL NUM2 VA A SER 0
-
-      console.log(operator, num1, num2);
-
-      if(String(operation) === String(operator)) {
-        console.log("YA HAY OPERADOR");
-        return;
-      };
-  
       num1 = resolveOperation();
-  
+      
       displayValue = INITIAL_VALUE;
-  
+      
       operator = String(operation);
     }
   }
@@ -136,8 +124,3 @@ equalsBtn.addEventListener("click", resolveOperation);
 
 const clearBtn = document.querySelector(".clear");
 clearBtn.addEventListener("click", clearDisplay);
-
-/*
-Gotchas: watch out for and fix these bugs if they show up in your code:
-  - You should round answers with long decimals so that they don’t overflow the screen.
-*/
