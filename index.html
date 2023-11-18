@@ -4,89 +4,90 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TOP - Calculator</title>
+  <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
-  <div class="display-container"></div>
-
-  <div class="operands">
-    <div>
-      <button 
-      data-value="7"
-      class="btn-digit">7</button>
+  <main>
+    <section class="calculator-container">
+      <div class="grid">        
+          <div class="display-container">
+          </div>
     
-      <button 
-      data-value="8"
-      class="btn-digit">8</button>
-      
-      <button 
-      data-value="9"
-      class="btn-digit">9</button>
-    </div>
-
-    <div>
-      <button 
-      data-value="4"
-      class="btn-digit">4</button>
+          <div class="clear-container">
+            <button class="btn btn-clear">C</button>
+        
+            <button class="btn btn-delete"><</button>
+          </div>
     
-      <button 
-      data-value="5"
-      class="btn-digit">5</button>
+          <div class="operands-container">
+            <button 
+            data-value="1"
+            class="btn btn-digit">1</button>
+          
+            <button 
+            data-value="2"
+            class="btn btn-digit">2</button>
+            
+            <button 
+            data-value="3"
+            class="btn btn-digit">3</button>
       
-      <button 
-      data-value="6"
-      class="btn-digit">6</button>
-    </div>
-
-    <div>
-      <button 
-      data-value="1"
-      class="btn-digit">1</button>
-    
-      <button 
-      data-value="2"
-      class="btn-digit">2</button>
+            <button 
+            data-value="4"
+            class="btn btn-digit">4</button>
+          
+            <button 
+            data-value="5"
+            class="btn btn-digit">5</button>
+            
+            <button 
+            data-value="6"
+            class="btn btn-digit">6</button>
+  
+            <button 
+            data-value="7"
+            class="btn btn-digit">7</button>
+          
+            <button 
+            data-value="8"
+            class="btn btn-digit">8</button>
+            
+            <button 
+            data-value="9"
+            class="btn btn-digit">9</button>
       
-      <button 
-      data-value="3"
-      class="btn-digit">3</button>
-    </div>
+            <button class="btn btn-toggle">-/+</button>
 
-    <div>
-      <button class="btn-toggle">-/+</button>
-      <button 
-      data-value="0"
-      class="btn-digit">0</button>
-      <button 
-      data-value="."
-      class="btn-decimal">.</button>
-    </div>
+            <button 
+            data-value="0"
+            class="btn btn-digit">0</button>
 
-  </div>
-
-  <div class="operators">
-    <button
-    data-value="+"
-    class="btn-operator">+</button>
-    <button
-    data-value="-"
-    class="btn-operator">-</button>
-    <button
-    data-value="*"
-    class="btn-operator">*</button>
-    <button
-    data-value="/"
-    class="btn-operator">/</button>
-  </div>
-
-  <div class="equal-container">
-    <button class="btn-equals">=</button>
-  </div>
-
-  <div class="clear-container">
-    <button class="btn-clear">C</button>
-
-    <button class="btn-delete"><</button>
-  </div>
+            <button 
+            data-value="."
+            class="btn btn-decimal">.</button>
+          </div>
+        
+          <div class="operators-container">
+            <button
+            data-value="+"
+            class="btn btn-operator">+</button>
+            <button
+            data-value="-"
+            class="btn btn-operator">-</button>
+            <button
+            data-value="*"
+            class="btn btn-operator">*</button>
+            <button
+            data-value="/"
+            class="btn btn-operator">/</button>
+          </div>
+        
+          <div class="equal-container">
+            <button class="btn btn-equals">=</button>
+          </div>
+        </div>
+    </section>
+  </main>
 
   <script src="./js/app.js"></script>
 </body>
