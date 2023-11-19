@@ -60,9 +60,10 @@ main {
   border-radius: 5px;
   color: white;
   display: flex;
+  flex-wrap: wrap;
   font-size: 3rem;
   justify-content: flex-end;
-  overflow: hidden;
+  overflow-x: hidden;
   padding-right: 5px;
   max-width: 200px;
 }

@@ -69,6 +69,8 @@ const showDisplay = (e) => {
     displayValue = input;
     displayDiv.textContent = `${displayValue}`;
   } else {
+    if(displayValue.length === 7) return;
+
     displayValue += String(input);
     displayDiv.textContent = `${displayValue}`;
   }
@@ -105,7 +107,7 @@ const resolveOperation = () => {
     let result = operate(operator, num1, num2);
 
     if(result % 1 !== 0) {
-      result = Number(result.toFixed(5));
+      result = Number(result.toFixed(4));
     }
 
     if (result === null) {
@@ -132,15 +134,17 @@ const setOperator = (e) => {
 
     operator = String(operation);
   } else {
-    let operation = e.target.dataset.value;
-  
     if(!num1) {
+      let operation = e.target.dataset.value;
+  
       num1 = displayValue;
 
       displayValue = INITIAL_VALUE;
   
       operator = String(operation);
     } else {
+      let operation = e.target.dataset.value;
+
       num2 = displayValue;
       num1 = resolveOperation();
       
@@ -178,7 +182,3 @@ clearBtn.addEventListener("click", clearDisplay);
 
 const deleteBtn = document.querySelector(".btn-delete");
 deleteBtn.addEventListener("click", removeValue);
-
-/*
-- Add keyboard support! You might run into an issue where keys such as (/) might cause you some trouble. Read the MDN documentation for event.preventDefault to help solve this problem.
-*/
